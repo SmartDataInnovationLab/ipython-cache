@@ -4,8 +4,14 @@ from codecs import open
 from os import path
 
 # Get the long description from the README file
-with open(path.join(path.abspath(path.dirname(__file__)), 'readme.md'), encoding='utf-8') as f:
-    long_description = f.read()
+long_description = ''
+try:
+    with open(path.join(path.abspath(path.dirname(__file__)), 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
+except IOError:
+    print("could not locate README.md")
+    pass
+
 
 setup(
     name='ipython-cache',
