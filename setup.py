@@ -1,26 +1,22 @@
+from setuptools import setup
 
-
-# Always prefer setuptools over distutils
-from setuptools import setup, find_packages
-# To use a consistent encoding
 from codecs import open
 from os import path
 
-here = path.abspath(path.dirname(__file__))
-
 # Get the long description from the README file
-with open(path.join(here, 'readme.md'), encoding='utf-8') as f:
+with open(path.join(path.abspath(path.dirname(__file__)), 'readme.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-
 setup(
-    name='cache_magic',
-    version='0.1.2',
-    description='Adds cache line-magic to ipython',
+    name='ipython-cache',
+    version='0.2',
+    packages=['cache_magic'],
+    url='https://github.com/SmartDataInnovationLab/ipython-cache',
     long_description=long_description,
-    author='Björn Jürgens',
+    license='',
+    author=u'Bjoern Juergens',
     author_email='juergens@teco.edu',
-    license='JSON',
+    description='versatile cache line magic for ipython',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -34,12 +30,10 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     install_requires=[
         'astunparse',
         'IPython',
         'datetime',
         'tabulate'
     ],
-    keywords='cache magic line-magic ipython',
 )
