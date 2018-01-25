@@ -39,13 +39,13 @@ Activate the magic by loading the module like any other module. Write into a cel
 
 When you want to apply the magic to a line, just prepend the line with `%cache`
 
-#### example
+### example
 
     %cache myVar = someSlowCalculation(some, "parameters")
 
 Calculates  `someSlowCalculation(some, "parameters")` once. And in subsequent calls restores myVar from storage.
 
-#### general form
+### general form
 
     %cache <variable> = <expression>
 
@@ -53,7 +53,7 @@ Calculates  `someSlowCalculation(some, "parameters")` once. And in subsequent ca
 
 **Expression**: This will only be excecuted once and the result will be stored to disk.
 
-#### full form
+### full form
 
     %cache [--version <version>] [--reset] [--debug] variable [= <expression>]
 
@@ -65,13 +65,13 @@ if version is '\*' or omitted, the hashed expression is used as version, so when
 
 **-d or --debug**: additional logging
 
-#### show cache
+### show cache
 
     %cache
 
 shows all variables in cache as html-table
 
-#### full reset
+### full reset
 
     %cache -r
     %cache --reset
@@ -86,17 +86,19 @@ In the directory where the kernel was started (usually where the notebook is loc
 
 ## push to pypi
 
-prepare login-data:
+prepare environment:
 
     gedit ~/.pypirc
     chmod 600 ~/.pypirc
+    sudo apt install pandoc
 
-upload changes to test:
+upload changes to test and production:
 
     pandoc -o README.rst README.md
+    restview --pypi-strict README.rst
     # update version in setup.py
-    # pycharm --> Tools --> Run setup.py Task
-
+    rm -r dist
+    python setup.py sdist
     twine upload dist/* -r testpypi
     twine upload dist/*
 

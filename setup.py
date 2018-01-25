@@ -6,7 +6,7 @@ from os import path
 # Get the long description from the README file
 long_description = ''
 try:
-    with open(path.join(path.abspath(path.dirname(__file__)), 'README.rst'), encoding='utf-8') as f:
+    with open(path.join(path.abspath(path.dirname(__file__)), 'README.rst')) as f:
         long_description = f.read()
 except IOError:
     print("could not locate README")
@@ -15,7 +15,7 @@ except IOError:
 
 setup(
     name='ipython-cache',
-    version='0.2.2',
+    version='0.2.4',
     packages=['cache_magic'],
     url='https://github.com/SmartDataInnovationLab/ipython-cache',
     long_description=long_description,
