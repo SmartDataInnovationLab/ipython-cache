@@ -1,0 +1,7 @@
+/.cache/
+/.cache_magic/
+/.ipynb_checkpoints/
+/cache_magic.egg-info/
+/.idea/
+
+*.pyc

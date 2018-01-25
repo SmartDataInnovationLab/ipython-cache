@@ -1,0 +1,12 @@
+version: "2"
+services:
+  notebook:
+    image: jupyter/datascience-notebook
+    restart: always
+    command: "sh -c 'pip install -e  ~/magic && /usr/local/bin/start-notebook.sh'"
+    volumes:
+      - .:/home/jovyan/magic
+    ports:
+      - 8888:8888
+    environment:
+      - GRANT_SUDO=yes
