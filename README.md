@@ -4,6 +4,18 @@
 
 This package adds `%cache` line-magic to ipython kernels in jupyter notebooks.
 
+## Quickstart
+
+* The pip-package is called `ipython-cache`
+* The python module is called `cache_magic`
+* The magic is called `%cache`
+
+So you can run this by entering this into an ipython-cell:
+
+    !pip install ipython-cache
+    import cache_magic
+    %cache a = 1+1
+
 ## installation
 
 ### install directly from notebook
@@ -71,6 +83,31 @@ deletes all cached values for all variables
 In the directory where the kernel was started (usually where the notebook is located)  in a subfolder called ".cache_magic"
 
 # developer Notes
+
+## push to pypi
+
+prepare login-data:
+
+    gedit ~/.pypirc
+    chmod 600 ~/.pypirc
+
+upload changes to test:
+
+    pandoc -o README.rst README.md
+    # update version in setup.py
+    # pycharm --> Tools --> Run setup.py Task
+
+    twine upload dist/* -r testpypi
+    twine upload dist/*
+
+test install from testpypi
+
+    pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ipython_cache --no-cache-dir --user
+
+test installation
+
+    sudo pip install ipython_cache --no-cache-dir --user
+
 
 ## editable import
 
