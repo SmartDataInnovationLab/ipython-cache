@@ -10,11 +10,12 @@ This package adds `%cache` line-magic to ipython kernels in jupyter notebooks.
 * The python module is called `cache_magic`
 * The magic is called `%cache`
 
-So you can run this by entering this into an ipython-cell:
+So you can run the magic by entering this into an ipython-cell:
 
     !pip install ipython-cache
     import cache_magic
     %cache a = 1+1
+    %cache
 
 ## installation
 
@@ -99,6 +100,7 @@ upload changes to test and production:
     # update version in setup.py
     rm -r dist
     python setup.py sdist
+    firefox https://testpypi.python.org/pypi/ipython-cache
     twine upload dist/* -r testpypi
     twine upload dist/*
 

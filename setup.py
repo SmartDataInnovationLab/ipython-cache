@@ -15,7 +15,7 @@ except IOError:
 
 setup(
     name='ipython-cache',
-    version='0.2.4',
+    version='0.2.5',
     packages=['cache_magic'],
     url='https://github.com/SmartDataInnovationLab/ipython-cache',
     long_description=long_description,
@@ -44,7 +44,6 @@ setup(
     install_requires=[
         'astunparse',
         'IPython',
-        'datetime',
         'tabulate'
     ],
 )
