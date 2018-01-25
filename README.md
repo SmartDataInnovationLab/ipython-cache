@@ -84,15 +84,15 @@ reload after each change:
     from imp import reload
     reload(cache_magic)
 
-Alternatively (if you don't want to install python, jupyter & co), you can use the docker-compose.yml for development: 
+Alternatively (if you don't want to install python, jupyter & co), you can use the docker-compose.yml for development:
 
-    cd cache-magic
+    cd ipython-cache
     docker-compose up
 
 
 ## create Conda Packet
 
-**todo**
+**todo:** This does not work yet
 
     conda install conda-build
     conda activate test
