@@ -12,60 +12,72 @@ This package adds `%cache` line-magic to ipython kernels in jupyter notebooks.
 
 So you can run the magic by entering this into an ipython-cell:
 
-    !pip install ipython-cache
-    import cache_magic
-    %cache a = 1+1
-    %cache
+```python
+!pip install ipython-cache
+import cache_magic
+%cache a = 1+1
+%cache
+```
 
-## installation
+# installation
 
-### install directly from notebook
+## install directly from notebook
 
 1. open jupyter notebook
 2. create new cell
 3. enter `!pip install cache-magic`
 4. execute
 
-### install into conda-environment
+## install into conda-environment
 
-    conda create -n test
-    source activate test
-    conda install -c juergens ipython-cache
-    jupyter notebook
+```bash
+conda create -n test
+source activate test
+conda install -c juergens ipython-cache
+jupyter notebook
+```
 
-## usage
+# usage
 
 Activate the magic by loading the module like any other module. Write into a cell `import cache_magic` and excecute it.
 
 When you want to apply the magic to a line, just prepend the line with `%cache`
 
-### example
+## example
 
-    %cache myVar = someSlowCalculation(some, "parameters")
+```python
+%cache myVar = someSlowCalculation(some, "parameters")
+```
 
 This will calculate  `someSlowCalculation(some, "parameters")` once. And in subsequent calls it restores myVar from storage.
 
 The magic turns this example into something like this (if there was no ipython-kernel and no versioning):  
 
-    try:
-      with open("myVar.txt", 'rb') as fp:
-        myVar = pickle.loads(fp.read())
-    except:
-      myVar = someSlowCalculation(some, "parameters")
-      with open("myVar.txt", 'wb') as fp:
-        pickle.dump(myVar, fp)
+```python
+try:
+  with open("myVar.txt", 'rb') as fp:
+    myVar = pickle.loads(fp.read())
+except:
+  myVar = someSlowCalculation(some, "parameters")
+  with open("myVar.txt", 'wb') as fp:
+    pickle.dump(myVar, fp)
+```
 
-### general form
+## general form
 
-    %cache <variable> = <expression>
+```python
+%cache <variable> = <expression>
+```
 
 **Variable**: This Variable's value will be fetched from cache.
 
 **Expression**: This will only be excecuted once and the result will be stored to disk.
 
-### full form
+## full form
 
-    %cache [--version <version>] [--reset] [--debug] variable [= <expression>]
+```python
+%cache [--version <version>] [--reset] [--debug] variable [= <expression>]
+```
 
 **-v or --version**: either a variable name or an integer. Whenever this changes, a new value is calculated (instead of returning an old value from the cache).
 
@@ -75,16 +87,20 @@ if version is '\*' or omitted, the hashed expression is used as version, so when
 
 **-d or --debug**: additional logging
 
-### show cache
+## show cache
 
-    %cache
+```python
+%cache
+```
 
 shows all variables in cache as html-table
 
-### full reset
+## full reset
 
-    %cache -r
-    %cache --reset
+```python
+%cache -r
+%cache --reset
+```
 
 deletes all cached values for all variables
 
@@ -99,68 +115,84 @@ In the directory where the kernel was started (usually where the notebook is loc
 
 prepare environment:
 
-    gedit ~/.pypirc
-    chmod 600 ~/.pypirc
-    sudo apt install pandoc
+```bash
+gedit ~/.pypirc
+chmod 600 ~/.pypirc
+sudo apt install pandoc
+```
 
 upload changes to test and production:
 
-    pandoc -o README.rst README.md
-    restview --pypi-strict README.rst
-    # update version in setup.py
-    rm -r dist
-    python setup.py sdist
-    twine upload dist/* -r testpypi
-    firefox https://testpypi.python.org/pypi/ipython-cache
-    twine upload dist/*
+```bash
+pandoc -o README.rst README.md
+restview --pypi-strict README.rst
+# update version in setup.py
+rm -r dist
+python setup.py sdist
+twine upload dist/* -r testpypi
+firefox https://testpypi.python.org/pypi/ipython-cache
+twine upload dist/*
+```
 
 test install from testpypi
 
-    pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ipython_cache --no-cache-dir --user
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple ipython_cache --no-cache-dir --user
+```
 
 test installation
 
-    sudo pip install ipython_cache --no-cache-dir --user
-
+```bash
+sudo pip install ipython_cache --no-cache-dir --user
+```
 
 ## editable import
 
 Install into environment with `-e`:
 
-    !pip install -e .
+```python
+!pip install -e .
+```
 
 reload after each change:
 
-    import cache_magic
-    from imp import reload
-    reload(cache_magic)
+```bash
+import cache_magic
+from imp import reload
+reload(cache_magic)
+```
 
 Alternatively (if you don't want to install python, jupyter & co), you can use the docker-compose.yml for development:
 
-    cd ipython-cache
-    docker-compose up
-
+```bash
+cd ipython-cache
+docker-compose up
+```
 
 ## create Conda Packet
 
 requires the bash with latest anaconda on path
 
-    bash
-    mkdir test && cd test
-    conda skeleton pypi ipython-cache
-    conda-build ipython-cache -c conda-forge
-    anaconda upload /home/juergens/anaconda3/conda-bld/linux-64/ipython-cache-*
+```bash
+bash
+mkdir test && cd test
+conda skeleton pypi ipython-cache
+conda-build ipython-cache -c conda-forge
+anaconda upload /home/juergens/anaconda3/conda-bld/linux-64/ipython-cache-*
+```
 
 ## running tests
 
-    bash
-    conda remove --name test --all
-    conda env create -f test/environment.yml
-    source activate test
-    conda remove ipython-cache
-    pip uninstall ipython_cache
-    pip install -e .
-    ./test/run_example.py
+```bash
+bash
+conda remove --name test --all
+conda env create -f test/environment.yml
+source activate test
+conda remove ipython-cache
+pip uninstall ipython_cache
+pip install -e .
+./test/run_example.py
+```
 
 If there is any error, it will be printed to stderr and the script fails.
 
