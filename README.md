@@ -17,6 +17,12 @@ So you can run the magic by entering this into an ipython-cell:
     %cache a = 1+1
     %cache
 
+## What does it do?
+
+basically it converts a line like this:
+
+    %cache
+
 ## installation
 
 ### install directly from notebook
@@ -31,7 +37,7 @@ So you can run the magic by entering this into an ipython-cell:
 
     conda create -n test
     source activate test
-    pip install cache-magic
+    conda install -c juergens ipython-cache
     jupyter notebook
 
 ## usage
@@ -44,7 +50,17 @@ When you want to apply the magic to a line, just prepend the line with `%cache`
 
     %cache myVar = someSlowCalculation(some, "parameters")
 
-Calculates  `someSlowCalculation(some, "parameters")` once. And in subsequent calls restores myVar from storage.
+This will calculate  `someSlowCalculation(some, "parameters")` once. And in subsequent calls it restores myVar from storage.
+
+The magic turns this example into something like this (if there was no ipython-kernel and no versioning):  
+
+    try:
+      with open("myVar.txt", 'rb') as fp:
+        myVar = pickle.loads(fp.read())
+    except:
+      myVar = someSlowCalculation(some, "parameters")
+      with open("myVar.txt", 'wb') as fp:
+        pickle.dump(myVar, fp)
 
 ### general form
 
@@ -81,7 +97,8 @@ deletes all cached values for all variables
 
 ## where is the cache stored?
 
-In the directory where the kernel was started (usually where the notebook is located)  in a subfolder called ".cache_magic"
+In the directory where the kernel was started (usually where the notebook is located)  in a subfolder called `.cache_magic`
+
 
 # developer Notes
 
@@ -100,8 +117,8 @@ upload changes to test and production:
     # update version in setup.py
     rm -r dist
     python setup.py sdist
-    firefox https://testpypi.python.org/pypi/ipython-cache
     twine upload dist/* -r testpypi
+    firefox https://testpypi.python.org/pypi/ipython-cache
     twine upload dist/*
 
 test install from testpypi
@@ -133,7 +150,10 @@ Alternatively (if you don't want to install python, jupyter & co), you can use t
 
 ## create Conda Packet
 
-**todo:** This does not work yet
+requires the bash with latest anaconda on path
 
-    conda install conda-build
-    conda activate test
+    bash
+    mkdir test && cd test
+    conda skeleton pypi ipython-cache
+    conda-build ipython-cache -c conda-forge
+    anaconda upload /home/juergens/anaconda3/conda-bld/linux-64/ipython-cache-*
