@@ -17,12 +17,6 @@ So you can run the magic by entering this into an ipython-cell:
     %cache a = 1+1
     %cache
 
-## What does it do?
-
-basically it converts a line like this:
-
-    %cache
-
 ## installation
 
 ### install directly from notebook
