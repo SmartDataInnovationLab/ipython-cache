@@ -45,7 +45,7 @@ When you want to apply the magic to a line, just prepend the line with `%cache`
 
 ## example
 
-```python
+```
 %cache myVar = someSlowCalculation(some, "parameters")
 ```
 
@@ -65,7 +65,7 @@ except:
 
 ## general form
 
-```python
+```
 %cache <variable> = <expression>
 ```
 
@@ -75,7 +75,7 @@ except:
 
 ## full form
 
-```python
+```
 %cache [--version <version>] [--reset] [--debug] variable [= <expression>]
 ```
 
@@ -177,8 +177,8 @@ requires the bash with latest anaconda on path
 bash
 mkdir test && cd test
 conda skeleton pypi ipython-cache
+conda config --set anaconda_upload yes
 conda-build ipython-cache -c conda-forge
-anaconda upload /home/juergens/anaconda3/conda-bld/linux-64/ipython-cache-*
 ```
 
 ## running tests

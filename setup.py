@@ -15,7 +15,7 @@ except IOError:
 
 setup(
     name='ipython-cache',
-    version='0.2.5',
+    version='0.2.6',
     packages=['cache_magic'],
     url='https://github.com/SmartDataInnovationLab/ipython-cache',
     long_description=long_description,
