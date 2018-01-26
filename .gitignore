@@ -4,6 +4,7 @@
 /*.egg-info/
 /.idea/
 /dist/
+/test/temp/
 *.pyc
 README.rst
 setup.cfg
