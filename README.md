@@ -151,3 +151,18 @@ requires the bash with latest anaconda on path
     conda skeleton pypi ipython-cache
     conda-build ipython-cache -c conda-forge
     anaconda upload /home/juergens/anaconda3/conda-bld/linux-64/ipython-cache-*
+
+## running tests
+
+    bash
+    conda remove --name test --all
+    conda env create -f test/environment.yml
+    source activate test
+    conda remove ipython-cache
+    pip uninstall ipython_cache
+    pip install --user -e .
+    ./test/run_example.py
+
+If there is any error, it will be printed to stderr and the script fails.
+
+the output can be found in "test/temp".

@@ -1,0 +1,18 @@
+name: test
+channels:
+- conda-forge
+- defaults
+dependencies:
+- astunparse
+- ipykernel
+- ipython
+- nbconvert
+- nbformat
+- numpy
+- pandoc
+- pip
+- python
+- scikit-learn
+- tabulate
+prefix: /home/juergens/anaconda3/envs/test
+
