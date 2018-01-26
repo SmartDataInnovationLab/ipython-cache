@@ -25,7 +25,6 @@ So you can run the magic by entering this into an ipython-cell:
 2. create new cell
 3. enter `!pip install cache-magic`
 4. execute
-5. restart kernel
 
 ### install into conda-environment
 
