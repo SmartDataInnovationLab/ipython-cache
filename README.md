@@ -160,7 +160,7 @@ requires the bash with latest anaconda on path
     source activate test
     conda remove ipython-cache
     pip uninstall ipython_cache
-    pip install --user -e .
+    pip install -e .
     ./test/run_example.py
 
 If there is any error, it will be printed to stderr and the script fails.
