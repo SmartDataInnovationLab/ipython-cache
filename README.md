@@ -1,5 +1,5 @@
 [![downloads](http://pepy.tech/badge/ipython-cache)](http://pepy.tech/project/ipython-cache) 
-[![pipeline status](https://gitlab.com/juergens/agt/badges/master/pipeline.svg)](https://gitlab.com/juergens/agt/commits/master)
+[![pipeline status](https://gitlab.com/juergens/ipython-cache/badges/master/pipeline.svg)](https://gitlab.com/juergens/ipython-cache/commits/master)
 
 
 # cache magic
