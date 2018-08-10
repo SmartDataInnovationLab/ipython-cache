@@ -1,4 +1,4 @@
-
+[![Downloads](http://pepy.tech/badge/ipython-cache)](http://pepy.tech/project/ipython-cache)
 
 # cache magic
 
