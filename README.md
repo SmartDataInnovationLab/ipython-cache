@@ -1,8 +1,16 @@
-[![Downloads](http://pepy.tech/badge/ipython-cache)](http://pepy.tech/project/ipython-cache)
+[![downloads](http://pepy.tech/badge/ipython-cache)](http://pepy.tech/project/ipython-cache) 
+[![pipeline status](https://gitlab.com/juergens/agt/badges/master/pipeline.svg)](https://gitlab.com/juergens/agt/commits/master)
+
 
 # cache magic
 
 This package adds `%cache` line-magic to ipython kernels in jupyter notebooks.
+
+## preview
+
+you can an example-notebook using this magic [here](
+https://gitlab.com/juergens/ipython-cache/builds/artifacts/master/file/test/result/example.out.ipynb/?job=test)
+
 
 ## Quickstart
 
