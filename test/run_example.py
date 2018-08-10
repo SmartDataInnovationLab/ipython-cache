@@ -10,7 +10,7 @@ import shutil
 notebook_filename = "example.ipynb"
 
 test_base_dir = "test"
-run_path =  os.path.join(test_base_dir, "temp")
+run_path =  os.path.join(test_base_dir, "result")
 notebook_filename_out = os.path.join(run_path, "example.out.ipynb")
 
 if os.path.exists(run_path):

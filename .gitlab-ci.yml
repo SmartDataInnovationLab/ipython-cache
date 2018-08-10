@@ -1,0 +1,11 @@
+image: jupyter/datascience-notebook
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+test:
+  script:
+    - "pip install -e . && ./test/run_example.py"
+  artifacts:
+    paths:
+      - "test/result/example.out.ipynb"

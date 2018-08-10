@@ -5,6 +5,9 @@
 /.idea/
 /dist/
 /test/temp/
+/.ipython/
+/test/.cache/
+/test/result
 *.pyc
 README.rst
 setup.cfg
