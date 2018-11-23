@@ -3,6 +3,7 @@ from IPython import get_ipython, start_ipython
 
 import pickle
 import os
+import time
 import hashlib
 import datetime
 import shutil
@@ -158,7 +159,8 @@ class CacheCall:
 
             try:
                 info = CacheCall.get_from_file(var_info_path)
-                vars.append([var_name, size, info["store_date"], "%.1f" % info["compute_time"],
+                vars.append([var_name, size, info["store_date"],
+                             "%.1f" % info.get("compute_time", 0.0),
                              info["version"], info["expression_hash"]])
 
             except IOError:
