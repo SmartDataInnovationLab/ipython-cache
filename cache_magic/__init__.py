@@ -8,6 +8,7 @@ import datetime
 import shutil
 import ast
 import astunparse
+import logging
 from tabulate import tabulate
 from IPython.display import HTML, display
 
@@ -52,16 +53,16 @@ class CacheCall:
 
         if reset:
             if var_name:
-                print("resetting cached values for " + var_name)
+                logging.warning("resetting cached values for " + var_name)
                 self._reset_var(var_folder_path)
                 # no return, because it might be a forced recalculation
             else:
-                print("resetting entire cache")
+                logging.warning("resetting entire cache")
                 self._reset_all(base_dir)
                 return
 
         if not var_name:
-            print("Warning: nothing todo: no variable defined, no reset requested, no show_all requested. ")
+            logging.warning("Warning: nothing todo: no variable defined, no reset requested, no show_all requested. ")
             return
 
         version = self._get_cache_version(version, var_value, user_ns)
@@ -74,7 +75,7 @@ class CacheCall:
             try:
                 stored_value = self.get_from_file(var_data_path)
 
-                print('loading cached value for variable \'{0}\'. Time since pickling  {1}'
+                logging.warning('loading cached value for variable \'{0}\'. Time since pickling  {1}'
                       .format(str(var_name), str(datetime.datetime.now() - info["store_date"])))
                 user_ns[var_name] = stored_value
             except IOError:
@@ -84,7 +85,7 @@ class CacheCall:
                 raise CacheCallException("variable '" + str(var_name) + "' not in cache")
 
         if var_value and stored_value is None:
-            print('creating new value for variable \'' + str(var_name) + '\'')
+            logging.warning('creating new value for variable \'' + str(var_name) + '\'')
             self._create_new_value(
                 self.shell,
                 var_folder_path,
@@ -145,7 +146,7 @@ class CacheCall:
         for subdir in os.listdir(base_dir):
             var_name = subdir
             if debug:
-                print("found subdir: " + var_name)
+                logging.warning("found subdir: " + var_name)
 
             data_path = os.path.join(base_dir, var_name, "data.txt")
             size = os.path.getsize(data_path)
@@ -156,7 +157,7 @@ class CacheCall:
                 vars.append([var_name, size, info["store_date"], info["version"], info["expression_hash"]])
 
             except IOError:
-                print("Warning: failed to read info variable '" + var_name + "'")
+                logging.warning("Warning: failed to read info variable '" + var_name + "'")
 
         display(HTML(tabulate(vars, headers=["var name", "size(byte)", "stored at date", "version", "expression(hash)"],
                               tablefmt="html")))
@@ -179,11 +180,11 @@ class CacheCall:
             if str(info["version"]) != str(version):
                 # Note: Version can be a string, a number or the content of a variable (which can by anything)
                 if debug:
-                    print("resetting because version mismatch")
+                    logging.warning("resetting because version mismatch")
                 CacheCall.reset_folder(var_folder_path)
             elif info["expression_hash"] != CacheCall.hash_line(var_value):
-                print("Warning! Expression has changed since last save, which was at " + str(info["store_date"]))
-                print("To store a new value, change the version ('-v' or '--version')  ")
+                logging.warning("Warning! Expression has changed since last save, which was at " + str(info["store_date"]))
+                logging.warning("To store a new value, change the version ('-v' or '--version')  ")
         else:
             if version != '' and info['version'] != version:
                 # force a version
@@ -203,8 +204,8 @@ class CacheCall:
         if version_param.isdigit():
             return int(version_param)
 
-        print("Version: " + str(version_param))
-        print("version_param.isdigit(): " + str(version_param.isdigit()))
+        logging.warning("Version: " + str(version_param))
+        logging.warning("version_param.isdigit(): " + str(version_param.isdigit()))
         raise CacheCallException("Invalid version. It must either be an Integer, *, or the name of a variable")
 
     @staticmethod
@@ -223,7 +224,7 @@ class CacheMagic(Magics):
             parameter = self.parse_input(line)
             CacheCall(self.shell)(**parameter)
         except CacheCallException as e:
-            print("Error: " + str(e))
+            logging.error("Error: " + str(e))
 
     @staticmethod
     def parse_input(_input):
@@ -298,6 +299,6 @@ class CacheMagic(Magics):
 try:
     ip = get_ipython()
     ip.register_magics(CacheMagic)
-    print("%cache magic is now registered in ipython")
+    logging.warning("%cache magic is now registered in ipython")
 except:
-    print("Error! Couldn't register magic in ipython!!!")
+    logging.error("Error! Couldn't register magic in ipython!!!")
