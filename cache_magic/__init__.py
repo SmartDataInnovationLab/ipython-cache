@@ -3,6 +3,7 @@ from IPython import get_ipython, start_ipython
 
 import pickle
 import os
+import time
 import hashlib
 import datetime
 import shutil
@@ -119,7 +120,11 @@ class CacheCall:
 
         # calculate the new Value in user-context
         cmd = self._reconstruct_expression(var_name, var_value)
+
+        # time the shell command
+        start_time = time.time()
         result = shell.run_cell(cmd)
+        compute_time = time.time() - start_time
 
         if not result.success:
             raise CacheCallException(
@@ -132,7 +137,8 @@ class CacheCall:
 
         info = dict(expression_hash=self.hash_line(var_value),
                     store_date=datetime.datetime.now(),
-                    version=version)
+                    version=version,
+                    compute_time=compute_time)
 
         with open(var_info_path, 'wb') as fp:
             pickle.dump(info, fp)
@@ -154,12 +160,15 @@ class CacheCall:
 
             try:
                 info = CacheCall.get_from_file(var_info_path)
-                vars.append([var_name, size, info["store_date"], info["version"], info["expression_hash"]])
+                vars.append([var_name, size, info["store_date"],
+                             "%.1f" % info.get("compute_time", 0.0),
+                             info["version"], info["expression_hash"]])
 
             except IOError:
                 logging.warning("Warning: failed to read info variable '" + var_name + "'")
 
-        display(HTML(tabulate(vars, headers=["var name", "size(byte)", "stored at date", "version", "expression(hash)"],
+        display(HTML(tabulate(vars, headers=["var name", "size(byte)", "stored at date",
+                                             "time(s)", "version", "expression(hash)"],
                               tablefmt="html")))
 
     @staticmethod
